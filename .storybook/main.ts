@@ -26,6 +26,7 @@ const config: StorybookConfig = {
           : true,
     },
   },
+  // Fix to publish Storybook to GitHub Pages
   viteFinal: async (config) => {
     config.base = "/design-system-tech-test-main/";
     return config;
