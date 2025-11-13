@@ -38,6 +38,9 @@ const meta = {
       type: "figma",
       url: "https://www.figma.com/design/wtMCijFeCt780z0fbtvBEP/Design-System-Tech-Test---Figma?node-id=1-181&p=f&m=dev",
     },
+    controls: {
+      exclude: ["component"], // hides it from controls table
+    },
   },
 } satisfies Meta<typeof TextField>;
 
@@ -71,7 +74,7 @@ export const Disabled: Story = {
   },
 };
 
-export const ErrorState: Story = {
+export const Error: Story = {
   args: {
     placeholder: "Error example",
     value: "Invalid input",

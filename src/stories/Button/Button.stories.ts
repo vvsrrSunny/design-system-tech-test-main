@@ -32,12 +32,15 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "Button component – supports multiple variants, .",
+        component: "Button component.",
       },
     },
     design: {
       type: "figma",
       url: "https://www.figma.com/design/wtMCijFeCt780z0fbtvBEP/Design-System-Tech-Test---Figma?node-id=0-1&p=f&t=qQKSXsPss7kiBGXZ-0",
+    },
+    controls: {
+      exclude: ["component"], // hides it from controls table
     },
   },
 } satisfies Meta<typeof Button>;
@@ -50,7 +53,6 @@ export const Contained: Story = {
     color: "primary",
     label: "Label",
     variant: "contained",
-    disabled: false,
   },
 };
 
@@ -58,7 +60,6 @@ export const Outlined: Story = {
   args: {
     color: "primary",
     variant: "outlined",
-    disabled: false,
     label: "Label",
   },
 };
@@ -72,14 +73,10 @@ export const Disabled: Story = {
   },
 };
 
-export const Focused: Story = {
+export const Error: Story = {
   args: {
-    color: "primary",
-    disabled: false,
+    color: "error",
     label: "Label",
     variant: "contained",
-  },
-  parameters: {
-    pseudo: { focus: true },
   },
 };

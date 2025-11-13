@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react-vite";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
-import { lightTheme, darkTheme } from "../src/theme";
+import { lightTheme, darkTheme } from "../src/theme/theme";
 
 export const decorators = [
   withThemeFromJSXProvider({
