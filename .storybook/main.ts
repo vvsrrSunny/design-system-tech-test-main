@@ -27,7 +27,7 @@ const config: StorybookConfig = {
     },
   },
   viteFinal: async (config) => {
-    config.base = "/design-system-tech-test/";
+    config.base = "/design-system-tech-test-main/";
     return config;
   },
 };
