@@ -5,6 +5,7 @@ import { createTheme } from "@mui/material/styles";
 import type { Components, Theme } from "@mui/material";
 // import "@fontsource/inter";
 
+/* ------------------ PALETTE EXTENSION ------------------ */
 declare module "@mui/material/styles" {
   interface Palette {
     outlinedColors: {
@@ -14,6 +15,15 @@ declare module "@mui/material/styles" {
       hoverBorder: string;
     };
     focusOutline: string;
+    inputColors: {
+      text: string;
+      disabledText: string;
+      placeholder: string;
+      error: {
+        background: string;
+        border: string;
+      };
+    };
   }
 
   interface PaletteOptions {
@@ -24,10 +34,19 @@ declare module "@mui/material/styles" {
       hoverBorder: string;
     };
     focusOutline?: string;
+    inputColors?: {
+      text: string;
+      disabledText: string;
+      placeholder: string;
+      error?: {
+        background: string;
+        border: string;
+      };
+    };
   }
 }
 
-// ✅ Shared tokens
+/* ------------------ TOKENS ------------------ */
 const tokens = {
   radius: {
     medium: 4, // ✅ use 4px as MEDIUM radius
@@ -35,9 +54,7 @@ const tokens = {
   spacing: 8, // ✅ 1 spacing unit = 8px
 };
 
-/**
- * ✅ Button overrides (fully typed)
- */
+/* ------------------ BUTTON OVERRIDES ------------------ */
 const buttonOverrides: Components<Theme>["MuiButton"] = {
   defaultProps: {
     disableElevation: true,
@@ -45,34 +62,34 @@ const buttonOverrides: Components<Theme>["MuiButton"] = {
   styleOverrides: {
     root: ({ theme }) => ({
       textTransform: "none",
-      fontFamily: "Inter",
-      fontWeight: 500,
-      fontSize: "14px",
-      lineHeight: `${theme.spacing(2.5)}`,
+      fontFamily: theme.typography.fontFamily,
+      fontSize: theme.typography.button.fontSize,
+      lineHeight: theme.typography.button.lineHeight,
+      fontWeight: theme.typography.button.fontWeight,
 
-      // button spacing  (8px vertical, 12px horizontal)
+      // Button spacing (8px vertical, 12px horizontal)
       padding: `${theme.spacing(1)} ${theme.spacing(1.5)}`,
-
       borderRadius: theme.shape.borderRadius,
+
       "&.Mui-disabled": {
         backgroundColor: theme.palette.action.disabledBackground,
         color: theme.palette.action.disabled,
         borderColor: theme.palette.action.disabledBackground,
       },
+
       "&:focus-visible": {
         outline: "none", // remove native outline
         boxShadow: `
-          0 0 0 2px #fff,                  /*  white gap fill */
+          0 0 0 2px #fff,                  /* white gap fill */
           0 0 0 4px ${theme.palette.focusOutline} /* colored outer ring */
         `,
       },
     }),
-    // ✅ CONTAINED BUTTON HOVER
+
     contained: ({ theme }) => ({
       "&:hover": {
-        backgroundColor: theme.palette.primary.dark, // will be overridden per color
+        backgroundColor: theme.palette.primary.dark,
       },
-      // 🧠 dynamic hover based on color prop
       "&.MuiButton-containedPrimary:hover": {
         backgroundColor: theme.palette.primary.dark,
       },
@@ -83,6 +100,7 @@ const buttonOverrides: Components<Theme>["MuiButton"] = {
         backgroundColor: theme.palette.error.dark,
       },
     }),
+
     outlined: ({ theme }) => ({
       borderWidth: "1px",
       borderStyle: "solid",
@@ -96,42 +114,153 @@ const buttonOverrides: Components<Theme>["MuiButton"] = {
   },
 };
 
+/* ------------------ TEXTFIELD OVERRIDES ------------------ */
+const textFieldOverrides: Components<Theme>["MuiTextField"] = {
+  styleOverrides: {
+    root: ({ theme }) => ({
+      fontFamily: theme.typography.fontFamily,
+      fontSize: theme.typography.fontSize,
+
+      "& .MuiOutlinedInput-root": {
+        backgroundColor: theme.palette.outlinedColors.background,
+        minHeight: theme.spacing(4.5),
+
+        "& fieldset": {
+          borderRadius: theme.shape.borderRadius,
+          borderWidth: 1,
+          borderColor: theme.palette.outlinedColors.border,
+        },
+
+        "&:hover fieldset": {
+          borderColor: theme.palette.outlinedColors.hoverBorder,
+        },
+
+        "&:hover": {
+          backgroundColor: theme.palette.outlinedColors.hoverBackground,
+        },
+
+        // ✅ Input text & placeholder
+        "& input": {
+          paddingTop: theme.spacing(1),
+          paddingBottom: theme.spacing(1),
+          paddingLeft: theme.spacing(1.5),
+          paddingRight: theme.spacing(1.5),
+          fontSize: theme.typography.button.fontSize,
+          lineHeight: theme.typography.button.lineHeight,
+          color: theme.palette.inputColors.text,
+
+          "&::placeholder": {
+            color: theme.palette.inputColors.placeholder,
+            opacity: 1,
+          },
+
+          // ✅ Disabled input colors
+          "&.Mui-disabled": {
+            color: theme.palette.inputColors.disabledText,
+            WebkitTextFillColor: theme.palette.inputColors.disabledText,
+            "&::placeholder": {
+              WebkitTextFillColor: theme.palette.action.disabled,
+              color: theme.palette.action.disabled,
+              opacity: 1,
+            },
+          },
+        },
+
+        // ✅ Disabled root
+        "&.Mui-disabled": {
+          backgroundColor: theme.palette.action.disabledBackground,
+          "& fieldset": {
+            border: 0,
+          },
+        },
+        "&.Mui-focused": {
+          backgroundColor: theme.palette.outlinedColors.background, // subtle tinted background (10% opacity)
+          "& fieldset": {
+            borderWidth: 1,
+            borderColor: theme.palette.outlinedColors.border,
+            outline: "none", // remove native outline
+            boxShadow: `
+          0 0 0 2px #fff,                  /* white gap fill */
+          0 0 0 4px ${theme.palette.focusOutline} /* colored outer ring */
+        `,
+          },
+        },
+
+        // ✅ Error state — add background + border color
+        "&.Mui-error": {
+          backgroundColor: theme.palette.inputColors.error.background, // subtle tinted background (10% opacity)
+          "& fieldset": {
+            borderColor: theme.palette.inputColors.error.border,
+          },
+          // Setting the same values for the hover
+          "&:hover": {
+            backgroundColor: theme.palette.inputColors.error.background,
+          },
+          "&:hover fieldset": {
+            borderColor: theme.palette.inputColors.error.border,
+          },
+        },
+      },
+    }),
+  },
+};
+
+/* ------------------ SHARED THEME OPTIONS ------------------ */
 const sharedThemeOptions = {
   typography: {
     fontFamily: "Inter, sans-serif",
+    fontSize: 14,
+    lineHeight: 20,
+    button: {
+      fontFamily: "Inter, sans-serif",
+      fontSize: "14px",
+      lineHeight: "20px",
+      fontWeight: 500,
+      textTransform: "none" as const, // ✅ literal type
+    },
   },
   shape: {
     borderRadius: tokens.radius.medium,
   },
   spacing: tokens.spacing,
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          fontFamily: "Inter, sans-serif",
+          fontSize: "14px",
+          lineHeight: 1.6,
+        },
+      },
+    },
     MuiButton: buttonOverrides,
+    MuiTextField: textFieldOverrides,
   },
 };
 
-/** ✅ Light theme */
+/* ------------------ LIGHT THEME ------------------ */
 export const lightTheme = createTheme({
   ...sharedThemeOptions,
   palette: {
     mode: "light",
     primary: {
-      main: "#078480", // your primary color
+      main: "#078480",
       dark: "#00524F",
-      contrastText: "#fff", // text color on primary background
+      contrastText: "#fff",
     },
     secondary: {
-      main: "#505558", // your secondary color
+      main: "#505558",
       dark: "#35383B",
       contrastText: "#fff",
     },
     error: {
-      main: "#D63443", // your error color
+      main: "#D63443",
       dark: "#5F030C",
       contrastText: "#fff",
     },
     action: {
       disabledBackground: "#F2F4F5",
-      disabled: "#8D949A", // text color
+      disabled: "#8D949A",
     },
     outlinedColors: {
       background: "#FBFBFC",
@@ -140,31 +269,35 @@ export const lightTheme = createTheme({
       hoverBorder: "#ADB2B7",
     },
     focusOutline: "#3ABCB7",
-  },
-  typography: {
-    button: {
-      textTransform: "none", // optional - remove ALL CAPS on buttons
+    inputColors: {
+      text: "#151617",
+      disabledText: "#505558",
+      placeholder: "#6B7076",
+      error: {
+        background: "#FFF0F1",
+        border: "#E4626F",
+      },
     },
   },
 });
 
-/** ✅ Dark theme */
+/* ------------------ DARK THEME ------------------ */
 export const darkTheme = createTheme({
   ...sharedThemeOptions,
   palette: {
     mode: "dark",
     primary: {
-      main: "#70D2C8", // your primary color
+      main: "#70D2C8",
       dark: "#ABE3DD",
-      contrastText: "#000", // text color on primary background
+      contrastText: "#000",
     },
     secondary: {
-      main: "#EDEEFC", // your secondary color
+      main: "#EDEEFC",
       dark: "#F4F4FF",
       contrastText: "#000",
     },
     error: {
-      main: "#F28F99", // your error color
+      main: "#F28F99",
       dark: "#FFDBDF",
       contrastText: "#000",
     },
@@ -179,10 +312,14 @@ export const darkTheme = createTheme({
       hoverBorder: "#9D9EAB",
     },
     focusOutline: "#70D2C8",
-  },
-  typography: {
-    button: {
-      textTransform: "none", // optional - remove ALL CAPS on buttons
+    inputColors: {
+      text: "#F9F9FF",
+      disabledText: "#DFE0EE",
+      placeholder: "#BCBDCA",
+      error: {
+        background: "#20212B",
+        border: "#F28F99",
+      },
     },
   },
 });
