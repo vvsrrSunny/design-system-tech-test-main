@@ -1,12 +1,31 @@
-import {
-  Button as MuiButton,
-  type ButtonProps as MuiButtonProps,
-} from "@mui/material";
+// import { styled } from "@mui/material/styles";
+import MuiButton, { type ButtonProps } from "@mui/material/Button";
 
-export interface ButtonProps extends MuiButtonProps {
+interface CustomButtonProps extends ButtonProps {
   label: string;
+  variant: Extract<ButtonProps["variant"], "outlined" | "contained">;
+  color: Extract<ButtonProps["color"], "primary" | "secondary" | "error">;
 }
 
-export const Button = ({ label, ...rest }: ButtonProps) => (
-  <MuiButton {...rest}>{label}</MuiButton>
-);
+function Button({
+  label,
+  onClick,
+  color = "primary",
+  disabled = false,
+  variant = "contained",
+  ...props
+}: CustomButtonProps) {
+  return (
+    <MuiButton
+      onClick={onClick}
+      variant={variant}
+      disabled={disabled}
+      color={color}
+      {...props}
+    >
+      {label}
+    </MuiButton>
+  );
+}
+
+export { Button };

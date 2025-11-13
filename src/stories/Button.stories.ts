@@ -1,48 +1,85 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import { fn } from "storybook/test";
-
 import { Button } from "./Button";
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Button",
+  title: "Components/Button",
   component: Button,
-  parameters: {
-    layout: "centered",
+  argTypes: {
+    label: {
+      control: "text",
+      description: "The text to display inside the button",
+      defaultValue: "Button",
+    },
+    color: {
+      control: { type: "radio" },
+      options: ["primary", "secondary", "error"],
+      description: "The button color",
+      defaultValue: "primary",
+    },
+    variant: {
+      control: { type: "radio" },
+      options: ["contained", "outlined"],
+      description: "The button variant (Contained or Outlined)",
+      defaultValue: "contained",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Whether the button is disabled",
+      defaultValue: "false",
+    },
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
-  args: { onClick: fn() },
+  parameters: {
+    docs: {
+      description: {
+        component: "Button component – supports multiple variants, .",
+      },
+    },
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/design/wtMCijFeCt780z0fbtvBEP/Design-System-Tech-Test---Figma?node-id=0-1&p=f&t=qQKSXsPss7kiBGXZ-0",
+    },
+  },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
+export const Contained: Story = {
   args: {
     color: "primary",
-    label: "Button",
+    label: "Label",
+    variant: "contained",
+    disabled: false,
   },
 };
 
-export const Secondary: Story = {
+export const Outlined: Story = {
   args: {
-    label: "Button",
+    color: "primary",
+    variant: "outlined",
+    disabled: false,
+    label: "Label",
   },
 };
 
-export const Large: Story = {
+export const Disabled: Story = {
   args: {
-    size: "large",
-    label: "Button",
+    color: "primary",
+    disabled: true,
+    label: "Label",
+    variant: "contained",
   },
 };
 
-export const Small: Story = {
+export const Focused: Story = {
   args: {
-    size: "small",
-    label: "Button",
+    color: "primary",
+    disabled: false,
+    label: "Label",
+    variant: "contained",
+  },
+  parameters: {
+    pseudo: { focus: true },
   },
 };
