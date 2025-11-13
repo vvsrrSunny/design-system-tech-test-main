@@ -26,6 +26,10 @@ const config: StorybookConfig = {
           : true,
     },
   },
+  viteFinal: async (config) => {
+    config.base = "/design-system-tech-test/";
+    return config;
+  },
 };
 
 export default config;
