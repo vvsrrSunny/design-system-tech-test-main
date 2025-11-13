@@ -73,10 +73,3 @@ export const Disabled: Story = {
   },
 };
 
-export const Error: Story = {
-  args: {
-    color: "error",
-    label: "Label",
-    variant: "contained",
-  },
-};
