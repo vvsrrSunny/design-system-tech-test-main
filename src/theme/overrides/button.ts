@@ -23,7 +23,7 @@ export const buttonOverrides: Components<Theme>["MuiButton"] = {
         borderColor: theme.palette.action.disabledBackground,
       },
 
-      "&:focus-visible": {
+      "&:focus": {
         outline: "none", // remove native outline
         boxShadow: `
           0 0 0 2px #fff,                  /* white gap fill */
