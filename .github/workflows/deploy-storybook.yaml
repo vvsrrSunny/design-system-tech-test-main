@@ -3,7 +3,7 @@ name: Deploy Storybook to GitHub Pages
 on:
   push:
     branches:
-      - main    # ONLY main should trigger the deployment
+      - main # ONLY main should trigger the deployment
 
 jobs:
   deploy:

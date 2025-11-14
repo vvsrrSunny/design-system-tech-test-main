@@ -2,26 +2,35 @@
   "name": "design-system-tech-test",
   "version": "0.0.1",
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "storybook dev -p 3000",
-    "build": "echo 'replace me with the library build command'",
+    "build": "vite build --config vite.lib.config.ts && rollup -c rollup.dts.config.mjs",
+    "types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
     "build-storybook": "storybook build",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
-  "dependencies": {
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@mui/material": "^7.3.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@fontsource/inter": "^5.2.8",
-    "@mui/material": "^7.3.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "@fontsource/inter": "^5.2.8"
   },
+  "dependencies": {},
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@storybook/addon-docs": "^9.1.8",
     "@storybook/addon-themes": "^9.1.8",
     "@storybook/react-vite": "^9.1.8",
+    "@types/node": "24.10.1",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
@@ -31,6 +40,8 @@
     "eslint-plugin-storybook": "^9.1.8",
     "globals": "^16.4.0",
     "prettier": "^3.6.2",
+    "rollup": "4.53.2",
+    "rollup-plugin-dts": "6.2.3",
     "storybook": "^9.1.8",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.44.0",
