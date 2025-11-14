@@ -27,6 +27,36 @@ const meta = {
       description: "Whether the button is disabled",
       defaultValue: "false",
     },
+    startIcon: {
+      control: false,
+    },
+    endIcon: {
+      control: false,
+    },
+    children: {
+      control: false,
+    },
+    component: {
+      control: false,
+    },
+    onFocusVisible: {
+      control: false,
+    },
+    LinkComponent: {
+      control: false,
+    },
+    onClick: {
+      control: false,
+    },
+    action: {
+      control: false,
+    },
+    touchRippleRef: {
+      control: false,
+    },
+    loadingIndicator: {
+      control: false,
+    },
   },
   tags: ["autodocs"],
   parameters: {
@@ -38,9 +68,6 @@ const meta = {
     design: {
       type: "figma",
       url: "https://www.figma.com/design/wtMCijFeCt780z0fbtvBEP/Design-System-Tech-Test---Figma?node-id=0-1&p=f&t=qQKSXsPss7kiBGXZ-0",
-    },
-    controls: {
-      exclude: ["component"], // hides it from controls table
     },
   },
 } satisfies Meta<typeof Button>;

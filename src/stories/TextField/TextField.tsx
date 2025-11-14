@@ -1,20 +1,15 @@
+import React from "react";
 import MuiTextField, { type TextFieldProps } from "@mui/material/TextField";
 import type { BaseProps } from "../../types/BaseProps";
 
 /**
- * Props for the design-system `TextField` component.
+ * Props for the design-system ⁠TextField component.
  *
  * Extends:
- * - {@link BaseProps} — shared props like `id`, `className`, `data-testid`.
- * - MUI's {@link TextFieldProps} (excluding `variant` and `onChange`).
+ * - {@link BaseProps} — shared props like ⁠id, ⁠className, ⁠data-testid.
+ * - MUI's {@link TextFieldProps} (excluding ⁠variant and ⁠onChange).
  */
 export type CustomTextFieldProps = BaseProps & {
-  /**
-   * Label displayed above the input.
-   * @example "Username"
-   */
-  label?: string;
-
   /**
    * Current input value (controlled).
    * @default ""
@@ -46,13 +41,7 @@ export type CustomTextFieldProps = BaseProps & {
   disabled?: boolean;
 
   /**
-   * Whether the field is in error state.
-   * @default false
-   */
-  isError?: boolean;
-
-  /**
-   * Error message displayed when `isError` is true.
+   * Error message displayed when ⁠isError is true.
    * @example "This field is required"
    */
   errorMessage?: string;
@@ -64,17 +53,11 @@ export type CustomTextFieldProps = BaseProps & {
   helperText?: string;
 
   /**
-   * Restrict rows to one line.
-   * @default 1
-   */
-  maxRow?: 1;
-
-  /**
    * Callback fired when value changes.
    * @example
-   * ```tsx
+   * ⁠tsx
    * onChange={(value) => console.log(value)}
-   * ```
+   * ⁠
    */
   onChange?: (newValue: string) => void;
 
@@ -94,60 +77,72 @@ export type CustomTextFieldProps = BaseProps & {
    * Default value for uncontrolled usage.
    */
   defaultValue?: string;
-} & Omit<TextFieldProps<"outlined">, "variant" | "onChange">;
+} & Omit<
+    TextFieldProps<"outlined">,
+    "variant" | "onChange" | "color" | "size"
+  >;
 
 /**
- * A single-line text input field based on MUI's `TextField`.
+ * A single-line text input field based on MUI's TextField.
  *
- * Supports standard text input props and shared design-system features via `BaseProps`.
+ * Supports standard text input props and shared design-system features via ⁠BaseProps.
  */
-export function TextField({
-  label,
-  placeholder,
-  value = "",
-  required = false,
-  autoFocus = false,
-  disabled = false,
-  isError = false,
-  errorMessage,
-  helperText,
-  fullWidth = true,
-  onChange,
-  className,
-  "data-testid": dataTestId,
-  name,
-  id,
-  type = "text",
-  defaultValue,
-  maxRow = 1,
-  ...props
-}: CustomTextFieldProps) {
-  return (
-    <MuiTextField
-      className={className}
-      label={label}
-      placeholder={placeholder}
-      value={value}
-      defaultValue={defaultValue}
-      required={required}
-      autoFocus={autoFocus}
-      disabled={disabled}
-      error={isError}
-      maxRows={maxRow}
-      data-testid={
-        dataTestId ??
-        `textfield-${String(label || name || id || "field")
-          .toLowerCase()
-          .replace(/\s+/g, "-")}`
-      }
-      helperText={isError ? errorMessage : helperText}
-      fullWidth={fullWidth}
-      name={name}
-      id={id}
-      type={type}
-      variant="outlined"
-      onChange={(e) => onChange?.(e.target.value)}
-      {...props}
-    />
-  );
-}
+export const TextField = React.forwardRef<
+  HTMLInputElement,
+  CustomTextFieldProps
+>(
+  (
+    {
+      placeholder,
+      value = "",
+      required = false,
+      autoFocus = false,
+      disabled = false,
+      errorMessage,
+      helperText,
+      fullWidth = true,
+      onChange,
+      className,
+      "data-testid": dataTestId,
+      name,
+      id,
+      type = "text",
+      defaultValue,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <MuiTextField
+        className={className}
+        placeholder={placeholder}
+        value={value}
+        defaultValue={defaultValue}
+        required={required}
+        autoFocus={autoFocus}
+        disabled={disabled}
+        data-testid={
+          dataTestId ??
+          `textfield-${String(name || id || "field")
+            .toLowerCase()
+            .replace(/\s+/g, "-")}`
+        }
+        helperText={props.error ? errorMessage : helperText}
+        fullWidth={fullWidth}
+        name={name}
+        id={id}
+        type={type}
+        variant="outlined"
+        onChange={(e) => onChange?.(e.target.value)}
+        inputRef={ref}
+        label = {props.hiddenLabel ? "" : props.label}
+        {...props}
+      />
+    );
+  }
+) as React.ForwardRefExoticComponent<
+  CustomTextFieldProps & React.RefAttributes<HTMLInputElement>
+>;
+
+// Better React DevTools name
+TextField.displayName = "TextField";

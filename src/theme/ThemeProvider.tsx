@@ -2,11 +2,15 @@ import { type ReactNode } from "react";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import type { Theme } from "@mui/material/styles";
-import { lightTheme } from "./theme";
+import { darkTheme, lightTheme } from "./theme";
 
 export interface DesignSystemThemeProviderProps {
   children: ReactNode;
-  theme?: Theme;
+  /**
+   * Either: "light" | "dark" | a fully constructed MUI Theme object.
+   * Defaults to "light".
+   */
+  theme?: "light" | "dark" | Theme;
 }
 
 /**
@@ -17,8 +21,12 @@ export const ThemeProvider = ({
   children,
   theme = lightTheme,
 }: DesignSystemThemeProviderProps) => {
+  // Resolve string → actual Theme object
+  const resolvedTheme: Theme =
+    theme === "dark" ? darkTheme : theme === "light" ? lightTheme : theme; // if the user passes a full Theme object
+
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={resolvedTheme}>
       <CssBaseline />
       {children}
     </MuiThemeProvider>

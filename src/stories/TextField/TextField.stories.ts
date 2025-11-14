@@ -20,10 +20,35 @@ const meta = {
       description: "Disables the text field when true",
       defaultValue: false,
     },
-    isError: {
-      control: "boolean",
-      description: "Displays error styling when true",
-      defaultValue: false,
+    type: {
+      control: { type: "text" },
+    },
+    label: {
+      control: { type: "text" },
+    },
+    helperText: {
+      control: { type: "text" },
+    },
+    maxRows: {
+      control: { type: "text" },
+    },
+    minRows: {
+      control: { type: "text" },
+    },
+    rows: {
+      control: { type: "text" },
+    },
+    classes: {
+      control: false,
+    },
+    onFocus: {
+      control: false,
+    },
+    onBlur: {
+      control: false,
+    },
+    inputRef: {
+      control: false,
     },
   },
   tags: ["autodocs"],
@@ -52,7 +77,6 @@ export const Default: Story = {
     placeholder: "Enter your name",
     value: "",
     disabled: false,
-    isError: false,
   },
 };
 
@@ -61,7 +85,7 @@ export const WithText: Story = {
     placeholder: "Enter your email",
     value: "sunny@example.com",
     disabled: false,
-    isError: false,
+    error: false,
   },
 };
 
@@ -70,7 +94,7 @@ export const Disabled: Story = {
     placeholder: "Disabled field",
     value: "Can't edit this",
     disabled: true,
-    isError: false,
+    error: false,
   },
 };
 
@@ -79,6 +103,6 @@ export const Error: Story = {
     placeholder: "Error example",
     value: "Invalid input",
     disabled: false,
-    isError: true,
+    error: true,
   },
 };

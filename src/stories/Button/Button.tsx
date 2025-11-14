@@ -11,7 +11,7 @@ export type ButtonOwnProps = {
   /**
    * The text label displayed inside the button.
    */
-  label: string;
+  label?: string;
 
   /**
    * The variant of the button.
@@ -83,7 +83,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         }
         {...props}
       >
-        {label}
+        {props.children ?? label}
       </MuiButton>
     );
   },

@@ -1,4 +1,5 @@
 // src/theme/tokens.ts
+
 export const tokens = {
   radius: {
     medium: 4,
@@ -7,11 +8,11 @@ export const tokens = {
 };
 
 export const typography = {
-  fontFamily: "Inter, sans-serif",
+  fontFamily: "Inter",
   fontSize: 14,
   lineHeight: 20,
   button: {
-    fontFamily: "Inter, sans-serif",
+    fontFamily: "Inter",
     fontSize: "14px",
     lineHeight: "20px",
     fontWeight: 500,
