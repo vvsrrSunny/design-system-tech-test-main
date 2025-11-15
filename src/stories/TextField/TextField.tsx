@@ -87,62 +87,54 @@ export type CustomTextFieldProps = BaseProps & {
  *
  * Supports standard text input props and shared design-system features via ⁠BaseProps.
  */
-export const TextField = React.forwardRef<
-  HTMLInputElement,
-  CustomTextFieldProps
->(
-  (
-    {
-      placeholder,
-      value = "",
-      required = false,
-      autoFocus = false,
-      disabled = false,
-      errorMessage,
-      helperText,
-      fullWidth = true,
-      onChange,
-      className,
-      "data-testid": dataTestId,
-      name,
-      id,
-      type = "text",
-      defaultValue,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <MuiTextField
-        className={className}
-        placeholder={placeholder}
-        value={value}
-        defaultValue={defaultValue}
-        required={required}
-        autoFocus={autoFocus}
-        disabled={disabled}
-        data-testid={
-          dataTestId ??
-          `textfield-${String(name || id || "field")
-            .toLowerCase()
-            .replace(/\s+/g, "-")}`
-        }
-        helperText={props.error ? errorMessage : helperText}
-        fullWidth={fullWidth}
-        name={name}
-        id={id}
-        type={type}
-        variant="outlined"
-        onChange={(e) => onChange?.(e.target.value)}
-        inputRef={ref}
-        label = {props.hiddenLabel ? "" : props.label}
-        {...props}
-      />
-    );
-  }
-) as React.ForwardRefExoticComponent<
-  CustomTextFieldProps & React.RefAttributes<HTMLInputElement>
->;
 
-// Better React DevTools name
+/**
+ * Design system TextField (NO forwardRef)
+ */
+export function TextField({
+  placeholder,
+  value = "",
+  required = false,
+  autoFocus = false,
+  disabled = false,
+  errorMessage,
+  helperText,
+  fullWidth = true,
+  onChange,
+  className,
+  "data-testid": dataTestId,
+  name,
+  id,
+  type = "text",
+  defaultValue,
+  ...props
+}: CustomTextFieldProps) {
+  return (
+    <MuiTextField
+      className={className}
+      placeholder={placeholder}
+      value={value}
+      defaultValue={defaultValue}
+      required={required}
+      autoFocus={autoFocus}
+      disabled={disabled}
+      data-testid={
+        dataTestId ??
+        `textfield-${String(name || id || "field")
+          .toLowerCase()
+          .replace(/\s+/g, "-")}`
+      }
+      helperText={props.error ? errorMessage : helperText}
+      fullWidth={fullWidth}
+      name={name}
+      id={id}
+      type={type}
+      variant="outlined"
+      onChange={(e) => onChange?.(e.target.value)}
+      label={props.hiddenLabel ? "" : props.label}
+      {...props}
+    />
+  );
+}
+
 TextField.displayName = "TextField";
