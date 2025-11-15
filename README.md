@@ -1,8 +1,3 @@
-## Table of contents to docs, local dev, and consumption
-
-- [Design System Documentation](#design-system-documentation)
-- [Design System, Local Development, and Consumption Guide](#design-system,-local-development,-and-consumption-guide)
-
 # Design System Tech Test
 
 Welcome!
@@ -188,7 +183,7 @@ The full hosted documentation for this Design System is available here:
 
 **https://vvsrrsunny.github.io/design-system-tech-test-main**
 
-# Design System, Local Development, and Consumption Guide
+## Design System, Local Development, and Consumption Guide
 
 This document explains how to build, link, and consume the `design-system-tech-test` package in another React application.
 
