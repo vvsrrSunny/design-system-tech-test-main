@@ -1,6 +1,8 @@
 ## Table of contents to docs, local dev, and consumption
+
 - [Design System Documentation](#design-system-documentation)
 - [Design System, Local Development, and Consumption Guide](#design-system,-local-development,-and-consumption-guide)
+
 # Design System Tech Test
 
 Welcome!
