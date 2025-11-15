@@ -20,10 +20,15 @@ const meta = {
       description: "Disables the text field when true",
       defaultValue: false,
     },
-    type: {
-      control: { type: "text" },
-    },
     label: {
+      control: { type: "text" },
+      description:
+        "The label content displayed above the input. Can pass string",
+      table: {
+        type: { summary: "ReactNode" },
+      },
+    },
+    type: {
       control: { type: "text" },
     },
     helperText: {
@@ -45,9 +50,6 @@ const meta = {
       control: false,
     },
     onBlur: {
-      control: false,
-    },
-    inputRef: {
       control: false,
     },
   },

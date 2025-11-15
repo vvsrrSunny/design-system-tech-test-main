@@ -3,72 +3,71 @@ import MuiTextField, { type TextFieldProps } from "@mui/material/TextField";
 import type { BaseProps } from "../../types/BaseProps";
 
 /**
- * Props for the design-system ⁠TextField component.
+ * Props for the design-system TextField component.
  *
- * Extends:
- * - {@link BaseProps} — shared props like ⁠id, ⁠className, ⁠data-testid.
- * - MUI's {@link TextFieldProps} (excluding ⁠variant and ⁠onChange).
+ * This component exposes a simplified and DS-approved API on top of MUI's TextField.
+ *
+ * It extends:
+ * - {@link BaseProps} — common DS props (id, className, data-testid)
+ * - A subset of MUI's {@link TextFieldProps} (variant, onChange, color, size, inputRef are intentionally removed)
+ *
+ * All custom DS props are defined explicitly to ensure a stable, design-consistent API surface.
  */
 export type CustomTextFieldProps = BaseProps & {
   /**
-   * Current input value (controlled).
+   * Current value of the input (controlled usage).
    * @default ""
    */
   value?: string;
 
   /**
-   * Placeholder text displayed when input is empty.
-   * @example "Enter your name"
+   * Placeholder text shown when input is empty.
    */
   placeholder?: string;
 
   /**
-   * Whether the field is required.
+   * Whether the input is required.
+   * This only sets the HTML `required` attribute.
    * @default false
    */
   required?: boolean;
 
   /**
-   * Automatically focuses the input on mount.
+   * Automatically focuses the input when mounted.
    * @default false
    */
   autoFocus?: boolean;
 
   /**
-   * Whether the field is disabled.
+   * Disables the entire input field.
    * @default false
    */
   disabled?: boolean;
 
   /**
-   * Error message displayed when ⁠isError is true.
-   * @example "This field is required"
+   * Text displayed under the input when `error` is true.
+   * Replaces default MUI behavior to keep DS control over error messaging.
    */
   errorMessage?: string;
 
   /**
-   * Helper text displayed below the input (when no error).
-   * @example "Max 50 characters"
+   * Helper text displayed below the field when there is no error.
    */
   helperText?: string;
 
   /**
-   * Callback fired when value changes.
-   * @example
-   * ⁠tsx
-   * onChange={(value) => console.log(value)}
-   * ⁠
+   * Called when the input's value changes.
+   * DS uses a simplified signature: `(newValue: string) => void`.
    */
   onChange?: (newValue: string) => void;
 
   /**
-   * Name attribute for form integration.
-   * @example "username"
+   * Name attribute for form integrations.
    */
   name?: string;
 
   /**
-   * Input type (e.g. text, password, number, email).
+   * HTML input type (text, password, email, number, etc.)
    * @default "text"
    */
   type?: React.InputHTMLAttributes<unknown>["type"];
@@ -79,17 +78,17 @@ export type CustomTextFieldProps = BaseProps & {
   defaultValue?: string;
 } & Omit<
     TextFieldProps<"outlined">,
-    "variant" | "onChange" | "color" | "size"
+    // Removed MUI props to avoid conflicts with DS API conventions
+    "variant" | "onChange" | "color" | "size" | "inputRef" | "hiddenLabel"
   >;
 
 /**
- * A single-line text input field based on MUI's TextField.
+ * Design System TextField (NO forwardRef).
  *
- * Supports standard text input props and shared design-system features via ⁠BaseProps.
- */
-
-/**
- * Design system TextField (NO forwardRef)
+ * This wrapper:
+ * - Maps DS props → MUI props
+ * - Applies DS default behavior and styling rules
+ * - Ensures a controlled API surface for consistency across applications
  */
 export function TextField({
   placeholder,
@@ -111,30 +110,43 @@ export function TextField({
 }: CustomTextFieldProps) {
   return (
     <MuiTextField
+      // Style/Class handling
       className={className}
+      // Core input props
       placeholder={placeholder}
       value={value}
       defaultValue={defaultValue}
       required={required}
       autoFocus={autoFocus}
       disabled={disabled}
+      fullWidth={fullWidth}
+      name={name}
+      id={id}
+      type={type}
+      variant="outlined" // DS-standard enforced variant
+      // Testing ID — auto-generated if not provided
       data-testid={
         dataTestId ??
         `textfield-${String(name || id || "field")
           .toLowerCase()
           .replace(/\s+/g, "-")}`
       }
+      /**
+       * HelperText logic:
+       * - If `error` is true → show design-system errorMessage
+       * - Otherwise → show normal helperText
+       */
       helperText={props.error ? errorMessage : helperText}
-      fullWidth={fullWidth}
-      name={name}
-      id={id}
-      type={type}
-      variant="outlined"
+      /**
+       * DS-standard onChange:
+       * Converts MUI's event → simple string value.
+       */
       onChange={(e) => onChange?.(e.target.value)}
-      label={props.hiddenLabel ? "" : props.label}
+      // Spread remaining DS-approved MUI props
       {...props}
     />
   );
 }
 
+// Better name in React DevTools
 TextField.displayName = "TextField";
