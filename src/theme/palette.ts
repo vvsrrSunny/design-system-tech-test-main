@@ -36,6 +36,8 @@ export const lightPalette: PaletteOptions = {
     error: {
       background: "#FFF0F1",
       border: "#E4626F",
+      hoverBackground: "#f3dfe0ff",
+      hoverBorder: "#e15a67ff",
     },
   },
 };
@@ -75,6 +77,8 @@ export const darkPalette: PaletteOptions = {
     error: {
       background: "#20212B",
       border: "#F28F99",
+      hoverBackground: "#41424D",
+      hoverBorder: "#f0abb2ff",
     },
   },
 };

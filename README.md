@@ -1,3 +1,6 @@
+## Table of contents to docs, local dev, and consumption
+- [Design System Documentation](#design-system-documentation)
+- [Design System, Local Development, and Consumption Guide](#design-system,-local-development,-and-consumption-guide)
 # Design System Tech Test
 
 Welcome!
@@ -176,3 +179,137 @@ The [NPM documentation](https://docs.npmjs.com/about-packages-and-modules) conta
 - Package builds successfully into the `dist` directory
 - Components work when linked locally, for testing we will use the `react-ts` Vite template [mentioned here](https://vite.dev/guide/#scaffolding-your-first-vite-project).
 - Clear, developer-friendly documentation
+
+## 📘 Design System Documentation
+
+The full hosted documentation for this Design System is available here:
+
+**https://vvsrrsunny.github.io/design-system-tech-test-main**
+
+# Design System, Local Development, and Consumption Guide
+
+This document explains how to build, link, and consume the `design-system-tech-test` package in another React application.
+
+---
+
+## 1. Setup and Build the Design System
+
+Inside the `design-system-tech-test` project:
+
+```bash
+npm install
+npm run build
+npm link
+```
+
+This compiles the library into `/dist` and exposes it globally for local linking.
+
+---
+
+## 2. Create or Prepare a Consumer App
+
+You can use any React app, but Vite + React + TypeScript is recommended.
+
+### Create a new consumer app
+
+```bash
+npm create vite@latest <consumer-app-name> -- --template react-ts
+cd <consumer-app-name>
+npm install
+```
+
+Or use your existing React app.
+
+---
+
+## 3. Install Required Dependencies
+
+Your Design System requires these dependencies in the consumer project:
+
+- **React / ReactDOM:** any `19.x.x` version (e.g. `19.0.0`, `19.0.1`, `19.1.0`, …)
+- **@mui/material:** version `7.3.2` (or a compatible `7.3.x` if you choose to relax it)
+- **@emotion/react:** any `11.14.x` or higher `<12.0.0`
+- **@emotion/styled:** any `11.14.x` or higher `<12.0.0`
+
+---
+
+## 4. Add Vite Dedupe Configuration (Important)
+
+Update `vite.config.ts` to ensure shared React + Emotion instances:
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    dedupe: ["react", "react-dom", "@emotion/react", "@emotion/styled"],
+  },
+});
+```
+
+---
+
+## 5. Link the Design System Package
+
+Inside the consumer app:
+
+```bash
+npm link design-system-tech-test
+```
+
+This links your local build instead of downloading from npm.
+
+---
+
+## 6. Import DS Styles
+
+If your Design System outputs CSS, import it inside your entry file:
+
+```ts
+import "design-system-tech-test/dist/design-system-tech-test.css";
+```
+
+---
+
+## 7. Using the Design System
+
+Wrap your app with the DS `ThemeProvider` and use components normally.
+
+Example:
+
+```tsx
+import { ThemeProvider, Button } from "design-system-tech-test";
+
+function App() {
+  return (
+    <ThemeProvider>
+      <Button label="Click Me" />
+    </ThemeProvider>
+  );
+}
+
+export default App;
+```
+
+- The default theme is **light**
+- All DS components should be wrapped in `ThemeProvider`
+
+---
+
+## 8. Run the Consumer App
+
+```bash
+npm run dev
+```
+
+Or build:
+
+```bash
+npm run build
+```
+
+---
+
+## Done!

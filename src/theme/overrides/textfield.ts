@@ -98,10 +98,10 @@ export const textFieldOverrides: Components<Theme>["MuiTextField"] = {
             borderColor: theme.palette.inputColors.error.border,
           },
           "&:hover": {
-            backgroundColor: theme.palette.inputColors.error.background,
+            backgroundColor: theme.palette.inputColors.error.hoverBackground,
           },
           "&:hover fieldset": {
-            borderColor: theme.palette.inputColors.error.border,
+            borderColor: theme.palette.inputColors.error.hoverBorder,
           },
         },
       },

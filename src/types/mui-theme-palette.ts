@@ -49,6 +49,10 @@ declare module "@mui/material/styles" {
         background: string;
         /** Border color when error is active. */
         border: string;
+        /** Hover background color when error is active. */
+        hoverBackground: string;
+        /** Hover border color when error is active. */
+        hoverBorder: string;
       };
     };
   }
@@ -96,6 +100,10 @@ declare module "@mui/material/styles" {
         background: string;
         /** Border color when error is active. */
         border: string;
+        /** Hover background color when error is active. */
+        hoverBackground: string;
+        /** Hover border color when error is active. */
+        hoverBorder: string;
       };
     };
   }
